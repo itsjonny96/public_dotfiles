@@ -1,0 +1,77 @@
+###############################################################################
+# Catppuccin Mocha Theme for Taskwarrior - Enhanced Contrast Version
+# Save this file as ~/.task/catppuccin-mocha.theme
+# Then add to your .taskrc: include ~/.task/catppuccin-mocha.theme
+###############################################################################
+
+rule.precedence.color=deleted,completed,active,keyword.,tag.,project.,overdue,scheduled,due.today,due,blocked,blocking,recurring,tagged,uda.
+
+# General decoration
+color.label=
+color.label.sort=
+color.alternate=on gray1
+color.header=white on gray5
+color.footnote=white on gray4
+color.warning=color11 on gray2
+color.error=color0 on color9
+color.debug=color15
+
+# Task state
+color.completed=color8
+color.deleted=color8
+color.active=color15 on rgb134
+color.recurring=color15
+color.scheduled=color15 on rgb123
+color.until=color8
+color.blocking=color11 on gray2
+color.blocked=color9 on gray2
+
+# Project
+color.project.none=
+
+# Priority
+color.uda.priority.H=color9 on gray2
+color.uda.priority.M=color11 on gray2
+color.uda.priority.L=color10 on gray2
+
+# Tags
+color.tag.next=color14 on gray2
+color.tag.none=
+color.tagged=color14
+
+# Due
+color.due=color11
+color.due.today=color11 on gray3
+color.overdue=color0 on color9
+
+# Report: burndown
+color.burndown.pending=color0 on color11
+color.burndown.started=color0 on color12
+color.burndown.done=color0 on color10
+
+# Report: history
+color.history.add=color0 on color10
+color.history.done=color0 on color10
+color.history.delete=color0 on color9
+
+# Report: summary
+color.summary.bar=color0 on color12
+color.summary.background=on gray2
+
+# Command: calendar
+color.calendar.due=color0 on color11
+color.calendar.due.today=color0 on color11
+color.calendar.holiday=color0 on color11
+color.calendar.overdue=color0 on color9
+color.calendar.today=color0 on color12
+color.calendar.weekend=on gray2
+color.calendar.weeknumber=color15
+
+# Command: sync
+color.sync.added=color10
+color.sync.changed=color11
+color.sync.rejected=color9
+
+# Command: undo
+color.undo.before=color11
+color.undo.after=color10

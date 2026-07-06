@@ -1,0 +1,32 @@
+# Work-specific configs (contain internal hostnames, credentials, etc.)
+**/*.work
+**/Brewfile.work
+
+# Credentials and local config — never committed
+*.pem
+*.key
+.env
+.env.*
+*.credentials
+zsh/secrets.zsh
+zsh/local.zsh
+zsh/.zshrc.local
+zsh/functions.zsh
+
+# OS files
+.DS_Store
+**/.DS_Store
+
+# Logs
+*.nvimlog
+
+# Oh-my-zsh
+oh-my-zsh/
+
+# Taskwarrior — machine-local files
+taskwarrior/.task/sync.taskrc
+taskwarrior/.task/*.sqlite3
+taskwarrior/.task/*.sqlite3-shm
+taskwarrior/.task/*.sqlite3-wal
+taskwarrior/.task/*.sqlite3.bak
+ai-context/

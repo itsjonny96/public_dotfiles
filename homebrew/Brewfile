@@ -1,0 +1,52 @@
+# Shell & terminal
+brew "zsh"
+brew "tmux"
+brew "starship"
+brew "carapace"
+brew "stow"
+
+# Core utilities
+brew "coreutils"
+brew "bat"
+brew "fzf"
+brew "ripgrep"
+brew "tree"
+brew "yazi"
+brew "pandoc"
+brew "xz"
+brew "zlib"
+brew "readline"
+brew "unison"
+
+# Git
+brew "git"
+brew "git-lfs"
+brew "lazygit"
+brew "diffnav"
+
+# Editors & LSP
+brew "neovim"
+brew "rust-analyzer"
+brew "tree-sitter"
+brew "tree-sitter-cli"
+
+# Dev runtimes & tools
+brew "mise"
+brew "ruby"
+brew "openssl@3"
+brew "tcl-tk"
+brew "graphviz"
+
+# Task management
+brew "task"
+
+# Bookmarks
+brew "bmm"
+
+# Fonts
+cask "font-jetbrains-mono-nerd-font"
+
+# macOS apps
+cask "alfred"
+cask "karabiner-elements"
+cask "sanesidebuttons"

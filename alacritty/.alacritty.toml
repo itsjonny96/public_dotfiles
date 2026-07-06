@@ -1,0 +1,29 @@
+[window]
+option_as_alt = "Both"
+padding.x = 10
+padding.y = 10 
+decorations = "Buttonless"
+blur = true
+opacity = 0.20
+
+[font]
+normal = { family = "JetBrainsMono Nerd Font", style = "Regular" }
+bold = { family = "JetBrainsMono Nerd Font", style = "Bold" }
+italic = { family = "JetBrainsMono Nerd Font", style = "Italic" }
+bold_italic = { family = "JetBrainsMono Nerd Font", style = "Bold Italic" }
+size = 12.0
+
+
+[cursor]
+style.shape = "Block"
+style.blinking = "Always"
+blink_interval = 500
+blink_timeout = 0
+unfocused_hollow = true
+
+[colors.cursor]
+cursor = "#00FF00"
+text = "#000000"
+
+[hints]
+enabled = [{ regex = "(https?://|www\\.)[\\w\\-@:%.+~#=/?&,;!]*[\\w\\-@%+~#=/]", command = "open", post_processing = true, hyperlinks = true, binding = { key = "U", mods = "Command|Shift" }, mouse = { enabled = true, mods = "Command" } }]

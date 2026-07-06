@@ -1,0 +1,49 @@
+# [Created by task 3.4.2 2/22/2026 22:12:57]
+data.location=~/.task
+news.version=3.4.2
+editor=nvim
+
+# To use the default location of the XDG directories,
+# move this configuration file from ~/.taskrc to ~/.config/task/taskrc and update location config as follows:
+
+#data.location=~/.local/share/task
+#hooks.location=~/.config/task/hooks
+
+# Color theme (uncomment one to use)
+#include light-16.theme
+#include light-256.theme
+#include bubblegum-256.theme
+#include dark-16.theme
+#include dark-256.theme
+#include dark-red-256.theme
+#include dark-green-256.theme
+#include dark-blue-256.theme
+#include dark-violets-256.theme
+#include dark-yellow-green.theme
+#include dark-gray-256.theme
+#include dark-gray-blue-256.theme
+#include solarized-dark-256.theme
+#include solarized-light-256.theme
+#include no-color.theme
+include ~/.task/catppuccin-mocha.theme
+
+# Sync settings are machine-specific — create ~/.task/sync.taskrc locally and uncomment:
+# include ~/.task/sync.taskrc
+
+# aliases
+alias.mod=modify
+alias.proj=project
+alias.ta='task add'
+
+# custom reports
+report.indies.description=Pending tasks with no project/tags unless they have priority or due
+report.indies.columns=id,project,tags,priority,due,description
+report.indies.labels=ID,Project,Tags,Pri,Due,Description
+report.indies.filter=status:pending ( project.none: tags.none: or priority.any: or due.any: )
+report.indies.sort=due+,priority-,description+
+
+report.indiesmin.description=Indies but minimal
+report.indiesmin.columns=id,description
+report.indiesmin.labels=ID,Description
+report.indiesmin.filter=status:pending ( project.none: tags.none: or priority.any: or due.any: )
+report.indiesmin.sort=due+,priority-,description+
