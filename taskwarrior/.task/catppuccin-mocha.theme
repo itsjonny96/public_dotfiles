@@ -9,39 +9,40 @@ rule.precedence.color=deleted,completed,active,keyword.,tag.,project.,overdue,sc
 # General decoration
 color.label=
 color.label.sort=
-color.alternate=on gray1
-color.header=white on gray5
-color.footnote=white on gray4
-color.warning=color11 on gray2
+color.alternate=
+color.header=white
+color.footnote=white
+color.warning=color11
 color.error=color0 on color9
 color.debug=color15
 
 # Task state
 color.completed=color8
 color.deleted=color8
-color.active=color15 on rgb134
+color.active=color15
 color.recurring=color15
-color.scheduled=color15 on rgb123
+color.scheduled=color15
 color.until=color8
-color.blocking=color11 on gray2
-color.blocked=color9 on gray2
+color.blocking=color11
+color.blocked=color9
 
 # Project
 color.project.none=
 
 # Priority
-color.uda.priority.H=color9 on gray2
-color.uda.priority.M=color11 on gray2
-color.uda.priority.L=color10 on gray2
+color.uda.priority.H=color208
+color.uda.priority.M=color229
+color.uda.priority.L=color8
 
 # Tags
-color.tag.next=color14 on gray2
+color.tag.next=
 color.tag.none=
-color.tagged=color14
+color.tag.inbox=color12
+color.tagged=
 
 # Due
-color.due=color11
-color.due.today=color11 on gray3
+color.due=
+color.due.today=color208
 color.overdue=color0 on color9
 
 # Report: burndown
