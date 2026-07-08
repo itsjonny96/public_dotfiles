@@ -30,3 +30,4 @@ taskwarrior/.task/*.sqlite3-shm
 taskwarrior/.task/*.sqlite3-wal
 taskwarrior/.task/*.sqlite3.bak
 ai-context/
+bootstrap-devdesktop.sh
