@@ -1,41 +1,48 @@
-# [Created by task 3.4.2 2/22/2026 22:12:57]
+# Taskwarrior Configuration (portable — machine-specific sync goes in ~/.taskrc.work)
 data.location=~/.task
 news.version=3.4.2
 editor=nvim
 
-# To use the default location of the XDG directories,
-# move this configuration file from ~/.taskrc to ~/.config/task/taskrc and update location config as follows:
-
-#data.location=~/.local/share/task
-#hooks.location=~/.config/task/hooks
-
-# Color theme (uncomment one to use)
-#include light-16.theme
-#include light-256.theme
-#include bubblegum-256.theme
-#include dark-16.theme
-#include dark-256.theme
-#include dark-red-256.theme
-#include dark-green-256.theme
-#include dark-blue-256.theme
-#include dark-violets-256.theme
-#include dark-yellow-green.theme
-#include dark-gray-256.theme
-#include dark-gray-blue-256.theme
-#include solarized-dark-256.theme
-#include solarized-light-256.theme
-#include no-color.theme
+# Color theme
 include ~/.task/catppuccin-mocha.theme
+color.history.done=color0 on color10
+color.history.add=color0 on color12
 
-# Sync settings are machine-specific — create ~/.task/sync.taskrc locally and uncomment:
-# include ~/.task/sync.taskrc
+# Alternating row backgrounds
+color.alternate=on color234
 
-# aliases
+# Row spacing for readability
+row.padding=2
+
+# Search
+search.case.sensitive=no
+
+# Urgency Coefficient Overrides
+urgency.uda.priority.L.coefficient=-1.0
+
+# ─── Aliases ──────────────────────────────────────────────────────────────────
 alias.mod=modify
 alias.proj=project
-alias.ta='task add'
+alias.prio=priority
 
-# custom reports
+# ─── Unified Sort Order ───────────────────────────────────────────────────────
+report.active.sort=due+,urgency-
+report.all.sort=due+,urgency-
+report.blocked.sort=due+,urgency-
+report.blocking.sort=due+,urgency-
+report.list.sort=due+,urgency-
+report.long.sort=due+,urgency-
+report.ls.sort=due+,urgency-
+report.minimal.sort=due+,urgency-
+report.ready.sort=due+,urgency-
+report.recurring.sort=due+,urgency-
+report.unblocked.sort=due+,urgency-
+report.waiting.sort=due+,urgency-
+report.overdue.sort=due+,urgency-
+
+# ─── Custom Reports ──────────────────────────────────────────────────────────
+
+# Indies: tasks without project/tags (unless prioritized or due)
 report.indies.description=Pending tasks with no project/tags unless they have priority or due
 report.indies.columns=id,project,tags,priority,due,description
 report.indies.labels=ID,Project,Tags,Pri,Due,Description
@@ -47,3 +54,7 @@ report.indiesmin.columns=id,description
 report.indiesmin.labels=ID,Description
 report.indiesmin.filter=status:pending ( project.none: tags.none: or priority.any: or due.any: )
 report.indiesmin.sort=due+,priority-,description+
+
+# ─── Machine-specific overrides (not tracked) ────────────────────────────────
+# Create ~/.taskrc.work locally for sync settings, work-specific UDAs, etc.
+include ~/.taskrc.work

@@ -6,6 +6,7 @@ export BAT_THEME="Catppuccin Mocha"
 [[ -f /opt/homebrew/bin/brew ]] && eval "$(/opt/homebrew/bin/brew shellenv)"
 
 # Dotfiles
+[[ -f ~/dotfiles/zsh/greeting.zsh ]]  && source ~/dotfiles/zsh/greeting.zsh
 [[ -f ~/dotfiles/zsh/functions.zsh ]] && source ~/dotfiles/zsh/functions.zsh
 [[ -f ~/dotfiles/zsh/aliases.zsh ]]   && source ~/dotfiles/zsh/aliases.zsh
 [[ -f ~/dotfiles/zsh/local.zsh ]]     && source ~/dotfiles/zsh/local.zsh

@@ -320,8 +320,8 @@ return {
     keymap.set("n", "<leader>wn", "<cmd>ObsidianWeekly<cr>", { desc = "Open weekly note" })
 
     -- Links and backlinks
-    keymap.set("n", "<leader>ol", "<cmd>Obsidian link<cr>", { desc = "Create link to note" })
-    keymap.set("n", "<leader>oL", "<cmd>Obsidian link_new<cr>", { desc = "Create link to new note" })
+    keymap.set("v", "<leader>ol", "<cmd>Obsidian link<cr>", { desc = "Create link to note" })
+    keymap.set("v", "<leader>oL", "<cmd>Obsidian link_new<cr>", { desc = "Create link to new note" })
     keymap.set("n", "<leader>ob", "<cmd>Obsidian backlinks<cr>", { desc = "Show backlinks" })
 
     -- Templates

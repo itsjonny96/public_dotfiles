@@ -65,6 +65,21 @@ return {
       -- Bullet icons for different levels
       icons = { "●", "○", "◆", "◇" },
     },
+    -- Table settings
+    pipe_table = {
+      -- Enable table rendering
+      enabled = true,
+      -- Table style: 'full' (borders around all cells), 'normal' (header separator only)
+      style = "full",
+      -- Cell content style: 'padded', 'trimmed', 'raw', 'overlay'
+      cell = "padded",
+      -- Minimum column width
+      min_width = 0,
+      -- Border characters (using round preset)
+      preset = "round",
+      -- Show alignment indicators
+      alignment_indicator = "━",
+    },
   },
 }
 
