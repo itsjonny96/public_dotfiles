@@ -17,6 +17,8 @@ brew "xz"
 brew "zlib"
 brew "readline"
 brew "unison"
+brew "csvlens"
+brew "qo"
 
 # Git
 brew "git"

@@ -48,7 +48,9 @@ install_packages_debian() {
     zsh tmux git git-lfs neovim stow \
     fzf bat ripgrep tree curl wget unzip \
     python3 python3-pip ruby \
-    task
+    task cargo
+
+  install_cargo_packages
 }
 
 install_packages_fedora() {
@@ -57,7 +59,9 @@ install_packages_fedora() {
     zsh tmux git git-lfs neovim stow \
     fzf bat ripgrep tree curl wget unzip \
     python3 python3-pip ruby \
-    task
+    task cargo lazygit
+
+  install_cargo_packages
 }
 
 install_packages_arch() {
@@ -66,7 +70,49 @@ install_packages_arch() {
     zsh tmux git git-lfs neovim stow \
     fzf bat ripgrep tree curl wget unzip \
     python python-pip ruby \
-    task
+    task cargo lazygit
+
+  install_cargo_packages
+}
+
+install_cargo_packages() {
+  if ! command -v cargo &>/dev/null; then
+    info "Installing Rust/Cargo..."
+    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+    source "$HOME/.cargo/env"
+  fi
+
+  local cargo_pkgs=(csvlens diffnav)
+  for pkg in "${cargo_pkgs[@]}"; do
+    if ! command -v "$pkg" &>/dev/null; then
+      info "Installing $pkg via cargo..."
+      cargo install "$pkg"
+    else
+      success "$pkg already installed"
+    fi
+  done
+
+  # lazygit (if not installed via package manager)
+  if ! command -v lazygit &>/dev/null; then
+    info "Installing lazygit..."
+    local LAZYGIT_VERSION
+    LAZYGIT_VERSION=$(curl -s "https://api.github.com/repos/jesseduffield/lazygit/releases/latest" | grep -Po '"tag_name": "v\K[^"]*')
+    curl -Lo /tmp/lazygit.tar.gz "https://github.com/jesseduffield/lazygit/releases/latest/download/lazygit_${LAZYGIT_VERSION}_Linux_x86_64.tar.gz"
+    tar xf /tmp/lazygit.tar.gz -C /tmp lazygit
+    sudo install /tmp/lazygit /usr/local/bin
+    rm /tmp/lazygit /tmp/lazygit.tar.gz
+  fi
+
+  # qo (Go-based, install from binary)
+  if ! command -v qo &>/dev/null; then
+    info "Installing qo..."
+    local QO_VERSION
+    QO_VERSION=$(curl -s "https://api.github.com/repos/cube2222/qo/releases/latest" | grep -Po '"tag_name": "v\K[^"]*')
+    curl -Lo /tmp/qo.tar.gz "https://github.com/cube2222/qo/releases/latest/download/qo_${QO_VERSION}_linux_amd64.tar.gz"
+    tar xf /tmp/qo.tar.gz -C /tmp qo
+    sudo install /tmp/qo /usr/local/bin
+    rm /tmp/qo /tmp/qo.tar.gz
+  fi
 }
 
 # ── Dotfiles ──────────────────────────────────────────────────────────────────
@@ -84,7 +130,7 @@ stow_dotfiles() {
   cd "$DOTFILES_DIR"
 
   local packages=()
-  for dir in nvim tmux zsh starship taskwarrior; do
+  for dir in nvim tmux zsh taskwarrior; do
     [[ -d "$dir" ]] && packages+=("$dir")
   done
 
