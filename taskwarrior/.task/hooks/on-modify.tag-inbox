@@ -1,0 +1,24 @@
+#!/usr/bin/env python3
+"""Add/remove +inbox tag based on whether task has project, tags, or due date."""
+import json, sys
+
+old = json.loads(sys.stdin.readline())
+task = json.loads(sys.stdin.readline())
+
+has_project = bool(task.get("project"))
+has_due = bool(task.get("due"))
+has_priority = bool(task.get("priority"))
+# Check for tags other than "inbox"
+tags = [t for t in task.get("tags", []) if t != "inbox"]
+
+if not has_project and not tags and not has_due and not has_priority:
+    task.setdefault("tags", [])
+    if "inbox" not in task["tags"]:
+        task["tags"].append("inbox")
+else:
+    task["tags"] = [t for t in task.get("tags", []) if t != "inbox"]
+    if not task["tags"]:
+        del task["tags"]
+
+print(json.dumps(task))
+sys.exit(0)

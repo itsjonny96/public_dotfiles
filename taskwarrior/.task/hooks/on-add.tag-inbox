@@ -1,0 +1,16 @@
+#!/usr/bin/env python3
+"""Auto-tag tasks that have only a description with +inbox."""
+import json, sys
+
+task = json.loads(sys.stdin.readline())
+
+has_project = bool(task.get("project"))
+has_tags = bool(task.get("tags"))
+has_due = bool(task.get("due"))
+has_priority = bool(task.get("priority"))
+
+if not has_project and not has_tags and not has_due and not has_priority:
+    task.setdefault("tags", []).append("inbox")
+
+print(json.dumps(task))
+sys.exit(0)

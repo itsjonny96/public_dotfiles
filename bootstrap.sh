@@ -149,17 +149,50 @@ clone_dotfiles() {
   fi
 }
 
-stow_dotfiles() {
-  cd "$DOTFILES_DIR"
+# ── Build steps ───────────────────────────────────────────────────────────────
 
-  local packages=()
-  for dir in nvim tmux zsh taskwarrior; do
-    [[ -d "$dir" ]] && packages+=("$dir")
-  done
+build_scripts() {
+  local aerospace_scripts="$DOTFILES_DIR/aerospace/.config/aerospace/scripts"
 
-  for pkg in "${packages[@]}"; do
-    info "Stowing $pkg..."
-    stow -v --restow "$pkg"
+  if [[ -f "$aerospace_scripts/almost-maximize.swift" ]]; then
+    info "Compiling almost-maximize..."
+    swiftc "$aerospace_scripts/almost-maximize.swift" -o "$aerospace_scripts/almost-maximize" \
+      && success "almost-maximize compiled" \
+      || warn "Failed to compile almost-maximize — skipping"
+  fi
+}
+
+# ── Alfred workflows ──────────────────────────────────────────────────────────
+
+install_alfred_workflows() {
+  [[ "$(detect_os)" != "macos" ]] && return 0
+
+  local alfred_dir="$HOME/Library/Application Support/Alfred/Alfred.alfredpreferences/workflows"
+  local dotfiles_workflows="$DOTFILES_DIR/alfred/workflows"
+
+  if [[ ! -d "$alfred_dir" ]]; then
+    warn "Alfred workflows directory not found — is Alfred installed?"
+    return 0
+  fi
+
+  if [[ ! -d "$dotfiles_workflows" ]]; then
+    return 0
+  fi
+
+  for workflow in "$dotfiles_workflows"/*/; do
+    local name
+    name="$(basename "$workflow")"
+    local target="$alfred_dir/user.workflow.$name"
+
+    if [[ -L "$target" ]]; then
+      success "Alfred workflow '$name' already linked"
+    elif [[ -d "$target" ]]; then
+      warn "Alfred workflow '$name' exists but is not a symlink — skipping (remove it manually to link from dotfiles)"
+    else
+      info "Linking Alfred workflow '$name'..."
+      ln -sf "$workflow" "$target"
+      success "Alfred workflow '$name' linked"
+    fi
   done
 }
 
@@ -199,16 +232,18 @@ main() {
     die "stow not found after package install — check your package list"
   fi
 
-  stow_dotfiles
+  build_scripts
+  install_alfred_workflows
   set_zsh_default
 
   echo ""
   success "Bootstrap complete!"
   echo ""
   echo "  Next steps:"
-  echo "  - Reload your shell:    exec zsh"
-  echo "  - Local overrides:      create ~/dotfiles/zsh/local.zsh  (gitignored)"
-  echo "  - Machine-specific env: create ~/.zshrc.local             (gitignored)"
+  echo "  - Stow packages manually:  cd ~/dotfiles && stow <package>"
+  echo "  - Reload your shell:       exec zsh"
+  echo "  - Local overrides:         create ~/dotfiles/zsh/local.zsh  (gitignored)"
+  echo "  - Machine-specific env:    create ~/.zshrc.local             (gitignored)"
   echo ""
 }
 

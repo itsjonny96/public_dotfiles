@@ -31,3 +31,6 @@ taskwarrior/.task/*.sqlite3-wal
 taskwarrior/.task/*.sqlite3.bak
 ai-context/
 bootstrap-devdesktop.sh
+
+# Compiled binaries (built from source during bootstrap)
+aerospace/.config/aerospace/scripts/almost-maximize
