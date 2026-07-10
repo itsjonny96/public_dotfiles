@@ -233,4 +233,5 @@ run = ['layout tiling', 'move-node-to-workspace O']
 
 # Everything else floats
 [[on-window-detected]]
+if = 'true'
 run = ['layout floating', 'exec-and-forget osascript -e "tell application \"System Events\" to set size of first window of (first process whose frontmost is true) to {900, 600}"']

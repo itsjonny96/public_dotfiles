@@ -8,8 +8,10 @@ include ~/.task/catppuccin-mocha.theme
 color.history.done=color0 on color10
 color.history.add=color0 on color12
 
-# Alternating row backgrounds
 color.alternate=on color234
+
+# Sync settings are machine-specific — create ~/.task/sync.taskrc locally
+include ~/.task/sync.taskrc
 
 # Row spacing for readability
 row.padding=2
@@ -57,4 +59,4 @@ report.indiesmin.sort=due+,priority-,description+
 
 # ─── Machine-specific overrides (not tracked) ────────────────────────────────
 # Create ~/.taskrc.work locally for sync settings, work-specific UDAs, etc.
-include ~/.taskrc.work
+# include ~/.taskrc.work

@@ -36,41 +36,54 @@ install_packages_macos() {
   fi
 
   info "Installing packages from Brewfile..."
-  brew bundle install --file="$DOTFILES_DIR/homebrew/Brewfile"
+  brew bundle install --file="$DOTFILES_DIR/homebrew/Brewfile" || \
+    warn "Some Homebrew packages failed to install — continuing"
 }
 
 install_packages_debian() {
   info "Updating apt..."
   sudo apt update -qq
 
-  info "Installing packages..."
-  sudo apt install -y \
-    zsh tmux git git-lfs neovim stow \
-    fzf bat ripgrep tree curl wget unzip \
-    python3 python3-pip ruby \
+  local pkgs=(
+    zsh tmux git git-lfs neovim stow
+    fzf bat ripgrep tree curl wget unzip
+    python3 python3-pip ruby
     task cargo
+  )
+  info "Installing packages..."
+  for pkg in "${pkgs[@]}"; do
+    sudo apt install -y "$pkg" || warn "apt: failed to install $pkg — skipping"
+  done
 
   install_cargo_packages
 }
 
 install_packages_fedora() {
-  info "Installing packages..."
-  sudo dnf install -y \
-    zsh tmux git git-lfs neovim stow \
-    fzf bat ripgrep tree curl wget unzip \
-    python3 python3-pip ruby \
+  local pkgs=(
+    zsh tmux git git-lfs neovim stow
+    fzf bat ripgrep tree curl wget unzip
+    python3 python3-pip ruby
     task cargo lazygit
+  )
+  info "Installing packages..."
+  for pkg in "${pkgs[@]}"; do
+    sudo dnf install -y "$pkg" || warn "dnf: failed to install $pkg — skipping"
+  done
 
   install_cargo_packages
 }
 
 install_packages_arch() {
-  info "Installing packages..."
-  sudo pacman -Sy --noconfirm \
-    zsh tmux git git-lfs neovim stow \
-    fzf bat ripgrep tree curl wget unzip \
-    python python-pip ruby \
+  local pkgs=(
+    zsh tmux git git-lfs neovim stow
+    fzf bat ripgrep tree curl wget unzip
+    python python-pip ruby
     task cargo lazygit
+  )
+  info "Installing packages..."
+  for pkg in "${pkgs[@]}"; do
+    sudo pacman -Sy --noconfirm "$pkg" || warn "pacman: failed to install $pkg — skipping"
+  done
 
   install_cargo_packages
 }
@@ -86,7 +99,7 @@ install_cargo_packages() {
   for pkg in "${cargo_pkgs[@]}"; do
     if ! command -v "$pkg" &>/dev/null; then
       info "Installing $pkg via cargo..."
-      cargo install "$pkg"
+      cargo install "$pkg" || warn "cargo: failed to install $pkg — skipping"
     else
       success "$pkg already installed"
     fi
@@ -97,10 +110,15 @@ install_cargo_packages() {
     info "Installing lazygit..."
     local LAZYGIT_VERSION
     LAZYGIT_VERSION=$(curl -s "https://api.github.com/repos/jesseduffield/lazygit/releases/latest" | grep -Po '"tag_name": "v\K[^"]*')
-    curl -Lo /tmp/lazygit.tar.gz "https://github.com/jesseduffield/lazygit/releases/latest/download/lazygit_${LAZYGIT_VERSION}_Linux_x86_64.tar.gz"
-    tar xf /tmp/lazygit.tar.gz -C /tmp lazygit
-    sudo install /tmp/lazygit /usr/local/bin
-    rm /tmp/lazygit /tmp/lazygit.tar.gz
+    if [[ -n "$LAZYGIT_VERSION" ]]; then
+      curl -Lo /tmp/lazygit.tar.gz "https://github.com/jesseduffield/lazygit/releases/latest/download/lazygit_${LAZYGIT_VERSION}_Linux_x86_64.tar.gz" \
+        && tar xf /tmp/lazygit.tar.gz -C /tmp lazygit \
+        && sudo install /tmp/lazygit /usr/local/bin \
+        && rm -f /tmp/lazygit /tmp/lazygit.tar.gz \
+        || warn "Failed to install lazygit — skipping"
+    else
+      warn "Could not resolve lazygit version — skipping"
+    fi
   fi
 
   # qo (Go-based, install from binary)
@@ -108,10 +126,15 @@ install_cargo_packages() {
     info "Installing qo..."
     local QO_VERSION
     QO_VERSION=$(curl -s "https://api.github.com/repos/cube2222/qo/releases/latest" | grep -Po '"tag_name": "v\K[^"]*')
-    curl -Lo /tmp/qo.tar.gz "https://github.com/cube2222/qo/releases/latest/download/qo_${QO_VERSION}_linux_amd64.tar.gz"
-    tar xf /tmp/qo.tar.gz -C /tmp qo
-    sudo install /tmp/qo /usr/local/bin
-    rm /tmp/qo /tmp/qo.tar.gz
+    if [[ -n "$QO_VERSION" ]]; then
+      curl -Lo /tmp/qo.tar.gz "https://github.com/cube2222/qo/releases/latest/download/qo_${QO_VERSION}_linux_amd64.tar.gz" \
+        && tar xf /tmp/qo.tar.gz -C /tmp qo \
+        && sudo install /tmp/qo /usr/local/bin \
+        && rm -f /tmp/qo /tmp/qo.tar.gz \
+        || warn "Failed to install qo — skipping"
+    else
+      warn "Could not resolve qo version — skipping"
+    fi
   fi
 }
 

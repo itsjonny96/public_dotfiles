@@ -1,7 +1,7 @@
 # Shell & terminal
 brew "zsh"
 brew "tmux"
-brew "starship"
+brew "romkatv/powerlevel10k/powerlevel10k"
 brew "carapace"
 brew "stow"
 
